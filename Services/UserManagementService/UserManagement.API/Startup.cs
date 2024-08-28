@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Diagnostics;
 using System.Text.Json;
 using System.Reflection;
 using UserManagement.Application.Commands.CreateUser;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace UserManagement.API
 {
@@ -22,6 +26,37 @@ namespace UserManagement.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<UserManagementDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                var jwtKey = Configuration["Jwt:Key"];
+                if (jwtKey == null)
+                {
+                    throw new ArgumentNullException(nameof(jwtKey), "JWT key cannot be null");
+                }
+
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    ValidAudience = Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+                };
+            });
+
+
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
@@ -71,6 +106,7 @@ namespace UserManagement.API
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
+            app.UseAuthentication();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

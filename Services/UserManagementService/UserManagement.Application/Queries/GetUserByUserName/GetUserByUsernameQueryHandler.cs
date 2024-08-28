@@ -5,11 +5,11 @@ using UserManagement.Infrastructure.Data.Repositories;
 
 namespace UserManagement.Application.Queries.GetUserByUserName
 {
-    public class GetUserByUsernameQueryHandler : IRequestHandler<GetUserByUserNameQuery, User>
+    public class GetUserByUserNameQueryHandler : IRequestHandler<GetUserByUserNameQuery, User>
     {
         private readonly IUserRepository _userRepository;
 
-        public GetUserByUsernameQueryHandler(IUserRepository userRepository)
+        public GetUserByUserNameQueryHandler(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
