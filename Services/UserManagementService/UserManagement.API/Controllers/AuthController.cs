@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using UserManagement.API.Models;
+using UserManagement.Infrastructure.Services;
 
 namespace UserManagement.API.Controllers
 {
@@ -13,12 +15,14 @@ namespace UserManagement.API.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IConfiguration _configuration;
+        private readonly IEmailService _emailService;
 
-        public AuthController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IConfiguration configuration)
+        public AuthController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IConfiguration configuration, IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
+            _emailService = emailService;
         }
 
         [HttpPost("register")]
@@ -41,7 +45,17 @@ namespace UserManagement.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            return Ok(new { Message = "User registered successfully" });
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var confirmationLink = Url.Action("ConfirmEmail", "Auth", new { userId = user.Id, token = token }, Request.Scheme);
+
+            if (confirmationLink == null)
+            {
+                throw new ArgumentNullException(nameof(confirmationLink), "Confirmation link cannot be null");
+            }
+
+            await _emailService.SendEmailConfirmationAsync(model.Email, confirmationLink);
+
+            return Ok(new { Message = "User registered successfully. Please check your email to confirm your account." });
         }
 
         [HttpPost("login")]
