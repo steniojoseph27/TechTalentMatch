@@ -1,4 +1,5 @@
-﻿
+﻿using CurriculumBuilderService.Domain.ValueObjects;
+
 namespace CurriculumBuilderService.Domain.Entities
 {
     public class JobDescription
@@ -6,9 +7,10 @@ namespace CurriculumBuilderService.Domain.Entities
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
         public string CompanyName { get; set; } = string.Empty;
-        public string Responsibilities { get; set; } = string.Empty;
-        public List<string>? RequiredSkills { get; set; }
-        public List<string>? PreferredSkills { get; set; }
         public string Location { get; set; } = string.Empty;
+        public List<Responsibility> Responsibilities { get; set; } = new List<Responsibility>();
+        public List<Skill> RequiredSkills { get; set; } = new List<Skill>();
+        public List<Skill> PreferredSkills { get; set; } = new List<Skill>();
+        public List<Qualification> Qualifications { get; set; } = new List<Qualification>();
     }
 }
