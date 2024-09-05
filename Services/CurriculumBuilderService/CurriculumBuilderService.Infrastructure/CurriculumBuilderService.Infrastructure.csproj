@@ -12,7 +12,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ResumeParsingService\ResumeParsingService.Application\ResumeParsingService.Application.csproj" />
     <ProjectReference Include="..\CurriculumBuilderService.Application\CurriculumBuilderService.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DependencyInjection\" />
   </ItemGroup>
 
 </Project>

@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CurriculumBuilderService.Domain\CurriculumBuilderService.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
