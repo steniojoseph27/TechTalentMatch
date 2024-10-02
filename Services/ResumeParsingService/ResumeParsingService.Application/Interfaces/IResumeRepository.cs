@@ -4,7 +4,7 @@ namespace ResumeParsingService.Application.Interfaces
 {
     public interface IResumeRepository
     {
-        Task SaveResume(Resume resume);
-        Task<Resume> GetResumeById(Guid id);
+        Task SaveResume(ResumeDto resumeDto);
+        Task<ResumeDto> GetResumeById(Guid id);
     }
 }

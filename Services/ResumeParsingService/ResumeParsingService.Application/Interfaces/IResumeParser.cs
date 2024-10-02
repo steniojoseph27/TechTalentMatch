@@ -4,6 +4,7 @@ namespace ResumeParsingService.Application.Interfaces
 {
     public interface IResumeParser
     {
-        ParsedResumeDto ParseResume(byte[] resumeData, FileType fileType);
+        ParsedResumeDto ParseResume(Stream resumeStream, FileType fileType);
+        Task<ResumeDto> ParseLinkedInProfileAsync(string accessToken);
     }
 }
