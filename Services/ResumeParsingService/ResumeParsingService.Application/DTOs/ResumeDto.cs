@@ -1,8 +1,6 @@
-﻿
-using ResumeParsingService.Domain.Entities;
-using ResumeParsingService.Application.DTOs;
+﻿using ResumeParsingService.Domain.Entities;
 
-namespace ResumeParsingService.Application.Models
+namespace ResumeParsingService.Application.DTOs
 {
     public class ResumeDto
     {
