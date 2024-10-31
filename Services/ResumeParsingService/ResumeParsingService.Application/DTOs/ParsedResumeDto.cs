@@ -1,5 +1,5 @@
 ﻿
-namespace ResumeParsingService.Application.Models
+namespace ResumeParsingService.Application.DTOs
 {
     public class ParsedResumeDto
     {

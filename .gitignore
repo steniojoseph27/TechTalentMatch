@@ -399,3 +399,5 @@ FodyWeavers.xsd
 /Services/UserManagementService/UserManagement.API/appsettings.json
 /Services/UserManagementService/UserManagement.API/Properties/launchSettings.json
 /Services/CurriculumBuilderService/CurriculumBuilderService.API/appsettings.json
+Services/ResumeParsingService/ResumeParsingService.API/appsettings.Development.json
+Services/ResumeParsingService/ResumeParsingService.API/appsettings.json
